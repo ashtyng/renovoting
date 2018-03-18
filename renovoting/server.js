@@ -11,8 +11,22 @@ app.use(express.static('dist'))
 let items = [];
 let id = 0;
 
+let questions=[];
+
+//Img Questions
+let Q1={pics: ["static/imgs/sink1.jpeg", "static/imgs/sink2.jpeg"], votes: [0,0]};
+questions.push(Q1);
+let Q2={pics: ["static/imgs/floor1.jpeg", "static/imgs/floor2.jpeg"], votes: [0,0]};
+questions.push(Q2);
+let Q3={pics: ["static/imgs/lights1.jpeg", "static/imgs/lights2.jpeg"], votes: [0,0]};
+questions.push(Q3);
+
 app.get('/api/items', (req, res) => {
   res.send(items);
+});
+
+app.get('/api/questions', (req, res) => {
+  res.send(questions);
 });
 
 app.put('/api/items/:id', (req, res) => {
@@ -32,6 +46,11 @@ app.put('/api/items/:id', (req, res) => {
     items.splice(indexTarget,0,item);
   }
   res.send(item);
+});
+
+app.put('/api/questions/:Qindex/:picIndex', (req,res) => {
+  questions[req.params.Qindex].votes[req.params.picIndex]+=1;
+  res.send(questions);
 });
 
 app.post('/api/items', (req, res) => {

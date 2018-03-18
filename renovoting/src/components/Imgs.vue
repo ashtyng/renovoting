@@ -3,16 +3,16 @@
     <h1>RenoVoting</h1>
       
     <ul>
-      <li v-for="question in questions">
-	     <img v-src="question.pics"/>
-      </li>
+        <li v-for="pic in nextQuestion.pics">
+	         <img v-bind:src="pic" v-on:click= "vote(pic)"/>
+        </li>
     </ul>
 
     <div v-if= "results">
       <ul>
-        <li v-for="vote in votes"><p>{{vote}}</p></li>
+        <li v-for="vote in nextQuestion.votes"><p>Votes: {{vote}}</p></li>
       </ul>
-      <button type="submit">next</button>
+      <button type="submit" v-on:click="nextQ()">next</button>
     </div>
 
   </div>
@@ -24,99 +24,55 @@
    name: 'Img',
    data () {
      return {
-       items: [],
-       text: '',
-       show: 'all',
-       drag: {},
+       questions: [],
+       results: false,
+       current: 0,
      }
    },
    computed: {
-     activeItems: function() {
-       return this.items.filter(function(item) {
-	 return !item.completed;
-       });
-     },
-     filteredItems: function() {
-       if (this.show === 'active')
-	 return this.items.filter(function(item) {
-	   return !item.completed;
-	 });
-       if (this.show === 'completed')
-	 return this.items.filter(function(item) {
-	   return item.completed;
-	 });
-       return this.items;
-     },
+    nextQuestion: function() {
+      return this.questions[this.current];
+    }
    },
    created: function() {
-     this.getItems();
+     this.getQs();
    },
    methods: {
-     getItems: function() {
-       axios.get("/api/items").then(response => {
-	 this.items = response.data;
-	 return true;
+     getQs: function() {
+     console.log("calling node");
+       axios.get("/api/questions").then(response => {
+         this.questions = response.data;
+         console.log("response="+this.questions);
+	       return true;
        }).catch(err => {
        });
      },
-     addItem: function() {
-       axios.post("/api/items", {
-	 text: this.text,
-	 completed: false
+
+     vote: function(pic) {
+      var Picindex=-1;
+      for(let i=0;i<this.nextQuestion.pics.length;i++) {
+        if(this.questions[this.current].pics[i]===pic) {
+          Picindex=i;
+        }
+      }
+
+       axios.put("/api/questions/" + this.current +"/"+ Picindex, {
        }).then(response => {
-	 this.text = "";
-	 this.getItems();
-	 return true;
+	       this.getQs();
+         this.results=true;
+         return true;
        }).catch(err => {
        });
      },
-     completeItem: function(item) {
-       axios.put("/api/items/" + item.id, {
-	 text: item.text,
-	 completed: !item.completed,
-	 orderChange: false,
-       }).then(response => {
-	 return true;
-       }).catch(err => {
-       });
-     },
-     deleteItem: function(item) {
-       axios.delete("/api/items/" + item.id).then(response => {
-	 this.getItems();
-	 return true;
-       }).catch(err => {
-       });
-     },
-     showAll: function() {
-       this.show = 'all';
-     },
-     showActive: function() {
-       this.show = 'active';
-     },
-     showCompleted: function() {
-       this.show = 'completed';
-     },
-     deleteCompleted: function() {
-       this.items.forEach(item => {
-	 if (item.completed)
-	   this.deleteItem(item)
-       });
-     },
-     dragItem: function(item) {
-       this.drag = item;
-     },
-     dropItem: function(item) {
-       axios.put("/api/items/" + this.drag.id, {
-	 text: this.drag.text,
-	 completed: this.drag.completed,
-	 orderChange: true,
-	 orderTarget: item.id
-       }).then(response => {
-	 this.getItems();
-	 return true;
-       }).catch(err => {
-       });
-     },
+
+     nextQ: function() {
+        this.results=false;
+        this.current+=1;
+        if(this.current===this.questions.length) {
+          this.current=0;
+        }
+     }
+     
    }
  }
 </script>

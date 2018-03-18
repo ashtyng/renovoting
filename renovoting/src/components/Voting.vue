@@ -28,7 +28,7 @@
    computed: {
      activeItems: function() {
        return this.items.filter(function(item) {
-	 return !item.completed;
+	     return !item.completed;
        });
      },
      filteredItems: function() {
@@ -49,8 +49,8 @@
    methods: {
      getItems: function() {
        axios.get("/api/items").then(response => {
-	 this.items = response.data;
-	 return true;
+	       this.items = response.data;
+	       return true;
        }).catch(err => {
        });
      },
