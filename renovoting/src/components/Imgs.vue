@@ -85,19 +85,20 @@
 <style scoped>
  ul {
      list-style: none;
-     
  }
 
  li {
-
      padding: 10px;
      margin-bottom: 10px;
      font-size: 1em;
      display: inline;
      align-items: center;
  }
+ img {
+  height: 400px;
+ }
 
  li.votes {
-     padding: 100px;
+     padding: 120px;
  }
 </style>

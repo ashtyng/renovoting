@@ -14,12 +14,16 @@ let id = 0;
 let questions=[];
 
 //Img Questions
-let Q1={pics: ["static/imgs/sink1.jpeg", "static/imgs/sink2.jpeg"], votes: [0,0]};
+let Q1={pics: ["static/imgs/sink1.jpeg", "static/imgs/sink2.jpeg", "static/imgs/sink3.jpg"], votes: [0,0,0]};
 questions.push(Q1);
-let Q2={pics: ["static/imgs/floor1.jpeg", "static/imgs/floor2.jpeg"], votes: [0,0]};
+let Q2={pics: ["static/imgs/floor1.jpeg", "static/imgs/floor2.jpeg", "static/imgs/floor3.jpg"], votes: [0,0,0]};
 questions.push(Q2);
-let Q3={pics: ["static/imgs/lights1.jpeg", "static/imgs/lights2.jpeg"], votes: [0,0]};
+let Q3={pics: ["static/imgs/lights1.jpeg", "static/imgs/lights2.jpeg", "static/imgs/lights3.jpg"], votes: [0,0,0]};
 questions.push(Q3);
+let Q4={pics: ["static/imgs/vanity1.jpg", "static/imgs/vanity2.jpg", "static/imgs/vanity3.jpg"], votes: [0,0,0]};
+questions.push(Q4);
+let Q5={pics: ["static/imgs/shower1.jpg", "static/imgs/shower2.jpg", "static/imgs/shower3.jpg"], votes: [0,0,0]};
+questions.push(Q5);
 
 app.get('/api/items', (req, res) => {
   res.send(items);
@@ -74,4 +78,4 @@ app.delete('/api/items/:id', (req, res) => {
   res.sendStatus(200);
 });
 
-app.listen(3000, () => console.log('Server listening on port 3000!'))
+app.listen(8000, () => console.log('Server listening on port 8000!'))
