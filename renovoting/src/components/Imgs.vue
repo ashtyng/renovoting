@@ -5,12 +5,13 @@
     <ul>
         <li v-for="pic in nextQuestion.pics">
 	         <img v-bind:src="pic" v-on:click= "vote(pic)"/>
+
         </li>
     </ul>
 
     <div v-if= "results">
       <ul>
-        <li v-for="vote in nextQuestion.votes"><p>Votes: {{vote}}</p></li>
+        <li class="votes" v-for="vote in nextQuestion.votes">Votes: {{vote}}</li>
       </ul>
       <button type="submit" v-on:click="nextQ()">next</button>
     </div>
@@ -49,6 +50,10 @@
      },
 
      vote: function(pic) {
+      if(this.results===true) {
+        return;
+      }
+
       var Picindex=-1;
       for(let i=0;i<this.nextQuestion.pics.length;i++) {
         if(this.questions[this.current].pics[i]===pic) {
@@ -80,52 +85,19 @@
 <style scoped>
  ul {
      list-style: none;
+     
  }
 
  li {
-     background: #f3f3f3;
-     width: 500px;
-     min-height: 30px;
+
      padding: 10px;
      margin-bottom: 10px;
      font-size: 1em;
-     display: flex;
+     display: inline;
      align-items: center;
  }
 
- .delete {
-     display: none;
-     margin-left: auto;
- }
-
- li:hover .delete {
-     display: block;
- }
-
- label {
-     width: 400px;
- }
-
- .completed {
-     text-decoration: line-through;
- }
-
- /* Form */
-
- input[type=checkbox] {
-     transform: scale(1.5);
-     margin-right: 10px;
- }
-
- input[type=text] {
-     font-size: 1em;
- }
-
- button {
-     font-family: 'Arvo';
-     font-size: 1em;
- }
- .controls {
-     margin-top: 20px;
+ li.votes {
+     padding: 100px;
  }
 </style>
