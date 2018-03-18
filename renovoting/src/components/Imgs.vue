@@ -15,8 +15,10 @@
       </ul>
       <button type="submit" v-on:click="nextQ()">next</button>
     </div>
-
+    <footer><a href="https://github.com/ashtyng/renovoting.git">Git Repo</a></footer>
   </div>
+
+
 </template>
 
 <script>
