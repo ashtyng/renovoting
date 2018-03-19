@@ -1,5 +1,6 @@
 <template>
   <div class="todo">
+    <a href="http://45.55.223.61:8000/#/vote">Vote on Image Ideas!</a>
     <h1>RenoVoting</h1>
     <form v-on:submit.prevent="addItem">
       <input type="text" v-model="text">

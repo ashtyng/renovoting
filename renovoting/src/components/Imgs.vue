@@ -1,5 +1,6 @@
 <template>
   <div class="img">
+  <a href="http://45.55.223.61:8000">Give us your own Ideas!</a>
     <h1>RenoVoting</h1>
       
     <ul>
